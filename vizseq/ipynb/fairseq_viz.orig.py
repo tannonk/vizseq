@@ -16,7 +16,7 @@ from vizseq.ipynb.core import (view_examples as _view_examples,
 from vizseq._view import DEFAULT_PAGE_SIZE, DEFAULT_PAGE_NO, VizSeqSortingType
 
 
-def _get_data(log_path_or_paths: Union[str, List[str]], nbest: int = 1):
+def _get_data(log_path_or_paths: Union[str, List[str]]):
     if isinstance(log_path_or_paths, str):
         log_path_or_paths = [log_path_or_paths]
     ids, src, ref, hypo = None, None, None, {}
@@ -29,12 +29,7 @@ def _get_data(log_path_or_paths: Union[str, List[str]], nbest: int = 1):
                 line = l.strip()
                 if line.startswith('H-'):
                     _id, _, sent = line.split('\t', 2)
-                    # cur_hypo[_id[2:]] = sent
-                    # collect multiple hypotheses for each ID (nbest > 1)
-                    if not _id[2:] in cur_hypo:
-                        cur_hypo[_id[2:]] = [sent]
-                    else:
-                        cur_hypo[_id[2:]].append(sent)
+                    cur_hypo[_id[2:]] = sent
                 elif line.startswith('T-'):
                     _id, sent = line.split('\t', 1)
                     cur_ref[_id[2:]] = sent
@@ -54,15 +49,7 @@ def _get_data(log_path_or_paths: Union[str, List[str]], nbest: int = 1):
         names.update([name])
         if names[name] > 1:
             name += f'.{names[name]}'
-        # hypo[name] = [cur_hypo[i] for i in cur_ids]
-        if nbest == 1:
-            # ensure that hypo = {'name': ['hyp1', 'hyp2', etc]}
-            hypo[name] = [cur_hypo[i][:nbest][0] for i in cur_ids]
-        else:
-            # hypo will be {'name': [['hyp1.1', 'hyp1.2', 'hyp1.3', ...], ['hyp2.1', 'hyp2.2', 'hyp2.3', ...], [etc]]}
-            # other functions will need to be extended for compatibility
-            hypo[name] = [cur_hypo[i][:nbest] for i in cur_ids]
-
+        hypo[name] = [cur_hypo[i] for i in cur_ids]
     return {'0': src}, {'0': ref}, hypo
 
 

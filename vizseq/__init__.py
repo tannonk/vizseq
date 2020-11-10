@@ -14,3 +14,4 @@ with open(op.join(FILE_ROOT, 'VERSION')) as f:
 
 from vizseq.ipynb import *
 from vizseq.ipynb import fairseq_viz as fairseq
+from vizseq.custom import * # added for custom score function which is not fully integrated
