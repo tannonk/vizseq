@@ -107,19 +107,5 @@ Changhan Wang ([changhan@fb.com](mailto:changhan@fb.com)), Jiatao Gu ([jgu@fb.co
 ## Updates
 
 - November 2020: added funtionality to handle Fairseq output files that contain Nbest outputs where N > 1.
-- November 2020: added functionality for Distinct-N scorer. Note, this is currently not integrated as a fully-fledged scoring function, but rather as a quick and dirty means of inspecting diversity on system outputs. It can be accessed as follows
-
-```
-import vizseq
-from vizseq.ipynb import fairseq_viz as fs
-from vizseq.custom import distinct_n as distn
-
-log_path = 'nbest5.txt'
-s, r, h = fs._get_data(log_path, nbest=1)
-
-print(f"CORPUS DISTINCT 1: {distn.get_corpus_distinct(h['nbest5'], 1)}")
-print(f"SENTENCE AVERAGE DISTINCT 1: {distn.calc_sentence_distinct_average(h['nbest5'], 1)}")
-
-print(f"CORPUS DISTINCT 2: {distn.get_corpus_distinct(h['nbest5'], 2)}")
-print(f"SENTENCE AVERAGE DISTINCT 2: {distn.calc_sentence_distinct_average(h['nbest5'], 2)}")
-```
+- December 2020: Distinct-N scorer - Proposed by Li et al. 2016. It measures "intra-text diversity based on distinct n-grams in each text" (Choi et al. 2020).
+- December 2020: Self-BLEU - Proposed by Zhu et al. 2018. It evaluates the inter-text diversity by computing BLEU (Papineni et al., 2002) score for each generated text by regarding other outputs as reference.
