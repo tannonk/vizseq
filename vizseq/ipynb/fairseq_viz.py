@@ -49,7 +49,8 @@ def _get_data(log_path_or_paths: Union[str, List[str]], nbest: int = 1):
         else:
             assert set(ids) == set(cur_ids) and set(src) == set(cur_src)
             assert set(ref) == set(cur_ref)
-        name = op.splitext(op.basename(log_path))[0]
+        # name = op.splitext(op.basename(log_path))[0]
+        name = log_path
         names.update([name])
         if names[name] > 1:
             name += f'.{names[name]}'
@@ -102,7 +103,8 @@ def _get_data_with_ids(log_path_or_paths: Union[str, List[str]], nbest: int = 1)
         else:
             assert set(ids) == set(cur_ids) and set(src) == set(cur_src)
             assert set(ref) == set(cur_ref)
-        name = op.splitext(op.basename(log_path))[0]
+        # name = op.splitext(op.basename(log_path))[0]
+        name = log_path # use full path as hypotheses id (key in dict)
         names.update([name])
         if names[name] > 1:
             name += f'.{names[name]}'
