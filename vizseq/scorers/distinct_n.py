@@ -28,7 +28,7 @@ def _get_sent_distinct(
     for h in hypothesis:
         h = h.split()
         
-        if len(h) < N: # avoid zero division error
+        if len(h) < N:
             scores.append(0.0)
 
         else:
