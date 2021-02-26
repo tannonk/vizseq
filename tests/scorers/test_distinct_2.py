@@ -12,15 +12,16 @@ class Distinct2ScorerTestCase(unittest.TestCase):
         """        
         hyp1 = "this is a simple test sentence for measuring distinct n-grams"
         hyp2 = ""
-        hyp3 = "test test test test"
-        hyps = [hyp1, hyp2, hyp3]
+        hyp3 = "xxxxx"
+        hyp4 = "test test test test"
+        hyps = [hyp1, hyp2, hyp3, hyp4]
 
         scorer = Distinct2Scorer(corpus_level=True, sent_level=True)
 
         result = scorer.score(hyps)
 
-        self.assertAlmostEqual(result.corpus_score, 0.444)
-        self.assertListEqual(result.sent_scores, [1.0, 0.0, 0.333])
+        self.assertAlmostEqual(result.corpus_score, 0.333)
+        self.assertListEqual(result.sent_scores, [1.0, 0.0, 0.0, 0.333])
 
 
 if __name__ == '__main__':
