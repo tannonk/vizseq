@@ -17,11 +17,11 @@ def _get_sent_distinct(
     extra_args: Optional[Dict[str, str]] = None
 ) -> List[float]:
     """
-    Compute distinct-N for a single hypothesis sentence.
+    Compute inter-sentence distinct-N for a corpus of hypothesis sentences.
 
-    :param sentence: a list of tokens
-    :param N: int, ngram.
-    :return: float, the metric value.
+    :param hypothesis: a list of hypotheses
+    :param N: int, ngram to use for calculating
+    :return: float, the metric value
     """
 
     scores = []

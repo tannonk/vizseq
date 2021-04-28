@@ -75,7 +75,8 @@ def _get_data_with_ids(log_path_or_paths: Union[str, List[str]], nbest: int = 1)
     ids, src, ref, hypo = None, None, None, {}
     names = Counter()
     for k, log_path in enumerate(log_path_or_paths):
-        assert op.isfile(log_path)
+        if not op.isfile(log_path):
+            print(f'[!] warning {log_path} does not look like a genuine Fairseq generation log file!')
         cur_src, cur_ref, cur_hypo = {}, {}, {}
         with open(log_path) as f:
             for l in f:
