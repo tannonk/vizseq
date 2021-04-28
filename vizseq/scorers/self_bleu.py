@@ -14,8 +14,10 @@ from tqdm import tqdm
 import numpy as np
 
 
-def _compute_self_bleu(hyps: List[str]) -> List[float]:
+def compute_self_bleu(hyps: List[str]) -> List[float]:
 
+    # initialise new BLEUScorer 
+    # NOTE: setting corpus_level=True and n_workers > 1 will error
     bleu_for_self = BLEUScorer(corpus_level=False, sent_level=True, n_workers=1, verbose=False, extra_args=None)
 
     selfbleu_scores = []
@@ -40,7 +42,7 @@ class SelfBLEUScorer(VizSeqScorer):
         
         corpus_score, group_scores, sent_scores = None, None, None
         
-        selfbleu_scores = _compute_self_bleu(hypothesis)
+        selfbleu_scores = compute_self_bleu(hypothesis)
             
         if self.corpus_level:
             # implement corpus-level score
